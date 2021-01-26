@@ -1,100 +1,100 @@
 package entities;
 
-import java.util.Scanner;
-
 import java.util.Date;
 
 public class Projeto {
+
+  private String titulo;
+  private String objetivo;
+  private String descricao;
+  private String agenciaFinanciadora;
+  private double valorDoFinanciamento;
+  private int status;
+  private Date dataInicio;
+  private Date dataTermino;
+
+  Projeto(String titulo, String objetivo, String descricao, String agenciaFinanciadora, double valorDoFinanciamento, int status, Date dataInicio, Date dataTermino) {
+  
+
+    this.titulo = titulo; 
+    this.objetivo = objetivo; 
+    this.descricao = descricao; 
+    this.agenciaFinanciadora = agenciaFinanciadora; 
+    this.valorDoFinanciamento = valorDoFinanciamento; 
+    this.status = status; 
+    this.dataInicio = dataInicio; 
+    this.dataTermino = dataTermino; 
+  }
+  
+  public static ProjetoBuilder builder(){
+    return new ProjetoBuilder();
+  }  
+  public static class ProjetoBuilder {
     
-    String titulo;
-    Date dataInicio;
-    Date dataTermino;
-    String objetivo;
-    String descricao;
-    String agenciaFinanciadora;
-    double valorDoFinanciamento;
-    int status;
+    private String titulo;
+    private String objetivo;
+    private String descricao;
+    private String agenciaFinanciadora;
+    private double valorDoFinanciamento;
+    private int status;
+    private Date dataInicio;
+    private Date dataTermino;
 
-
-    public Projeto(String titulo, Date dataInicio, Date dataTermino, 
-                String objetivo, String descricao, String agenciaFinanciadora,
-                double valorDoFinanciamento){
-        
-        this.titulo = titulo;
-        this.dataInicio = dataInicio;
-        this.dataTermino = dataTermino;
-        this.objetivo = objetivo;
-        this.descricao = descricao;
-        this.agenciaFinanciadora = agenciaFinanciadora;
-        this.valorDoFinanciamento = valorDoFinanciamento;    
+    ProjetoBuilder() {    
+    }
+      
+    public ProjetoBuilder titulo(String titulo){
+      this.titulo = titulo;
+      return ProjetoBuilder.this;
     }
 
-    
-    public void alterarStatus(){
-        Scanner sc = new Scanner(System.in);
-        char resposta;
-
-        // -1: Em elaboração
-        //  1: Em andamento
-        //  0: Concluído
-
-        if(this.getStatus() == -1){
-            System.out.println("Alterar status para \"Em andamento\" (s/n)?");
-            resposta = sc.next().charAt(0);
-
-            if(resposta == 's'){
-                this.setStatus(1);
-            }
-        }
-        else if(this.getStatus() == 1){
-            System.out.println("Alterar status para \"Concluído\" (s/n)?");
-            resposta = sc.next().charAt(0);
-
-            if(resposta == 's'){
-                this.setStatus(0);
-            }
-        }
-        else if (this.getStatus() == 0) {
-            System.out.println("Projeto concluído, não dá mais para modificar!");
-        }
-
-        sc.close();
+    public ProjetoBuilder objetivo(String objetivo){
+      this.objetivo = objetivo;
+      return ProjetoBuilder.this;
     }
 
-
-    public String getTitulo() {
-        return titulo;
+    public ProjetoBuilder descricao(String descricao){
+      this.descricao = descricao;
+      return ProjetoBuilder.this;
     }
 
-    public Date getDataInicio() {
-        return dataInicio;
+    public ProjetoBuilder agenciaFinanciadora(String agenciaFinanciadora){
+      this.agenciaFinanciadora = agenciaFinanciadora;
+      return ProjetoBuilder.this;
     }
 
-    public Date getDataTermino() {
-        return dataTermino;
+    public ProjetoBuilder valorDoFinanciamento(double valorDoFinanciamento){
+      this.valorDoFinanciamento = valorDoFinanciamento;
+      return ProjetoBuilder.this;
     }
 
-    public String getObjetivo() {
-        return objetivo;
+    public ProjetoBuilder status(int status){
+      this.status = status;
+      return ProjetoBuilder.this;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public ProjetoBuilder dataInicio(Date dataInicio){
+      this.dataInicio = dataInicio;
+      return ProjetoBuilder.this;
     }
 
-    public String getAgenciaFinanciadora() {
-        return agenciaFinanciadora;
+    public ProjetoBuilder dataTermino(Date dataTermino){
+      this.dataTermino = dataTermino;
+      return ProjetoBuilder.this;
     }
 
-    public double getValorDoFinanciamento() {
-        return valorDoFinanciamento;
+    public Projeto build() {
+      return new Projeto(this.titulo, this.objetivo, this.descricao, this.agenciaFinanciadora, this.valorDoFinanciamento, this.status, this.dataInicio, this.dataTermino);
     }
-
-    public int getStatus() {
-        return status;
+    @Override
+    public String toString() {
+      return "Projeto.ProjetoBuilder(titulo=" + this.titulo + ", objetivo=" + this.objetivo + ", descricao=" + this.descricao + ", agenciaFinanciadora=" + this.agenciaFinanciadora + ", valorDoFinanciamento=" + this.valorDoFinanciamento + ", status=" + this.status + ", dataInicio=" + this.dataInicio + ", dataTermino=" + this.dataTermino + ")";
     }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
+  }
+  
+  @Override
+  public String toString() {
+    return "\nProjeto:\n * Título: " + this.titulo + "\n * Objetivo: " + this.objetivo + "\n * Descrição: " + this.descricao + "\n * Agência Financiadora: " + this.agenciaFinanciadora + "\n * Valor do Financiamento: " + this.valorDoFinanciamento + "\n * Status: " + this.status + "\n * Data de Início: " + this.dataInicio + "\n * Data de Término: " + this.dataTermino + "\n---------------------------\n";
+  }
+  
 }

@@ -5,10 +5,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import entities.Projeto.ProjetoBuilder;
+
 import java.util.Date;
-
-import exceptions.DomainException;
-
 
 public class Laboratorio {
     Scanner sc = new Scanner(System.in);
@@ -17,26 +16,22 @@ public class Laboratorio {
     private static ArrayList<Colaborador> listaColaboradores = new ArrayList<Colaborador>();
     private static ArrayList<Projeto> listaProjetos = new ArrayList<Projeto>();
 
-    public void adicionarColaborador(){
+    public void adicionarColaborador() {
         System.out.println("\nDigite os dados do colaborador:");
-        
+
         System.out.print("\nNome: ");
         String nome = sc.nextLine();
 
         System.out.print("\nE-mail: ");
         String email = sc.nextLine();
 
-        System.out.println("A qual categoria este colaborador pertence? \n" +
-                        "1 - Aluno Graduação\n" +
-                        "2 - Aluno Mestrado\n" +
-                        "3 - Aluno Doutorado\n" +
-                        "4 - Professor\n" +
-                        "5 - Pesquisador\n" );
+        System.out.println("A qual categoria este colaborador pertence? \n" + "1 - Aluno Graduação\n"
+                + "2 - Aluno Mestrado\n" + "3 - Aluno Doutorado\n" + "4 - Professor\n" + "5 - Pesquisador\n");
 
         int opcaoCategoria = sc.nextInt();
-        sc.nextLine(); //escape do enter
+        sc.nextLine(); // escape do enter
 
-        if(opcaoCategoria > 5 || opcaoCategoria < 1) {
+        if (opcaoCategoria > 5 || opcaoCategoria < 1) {
             System.out.println("Categoria inválida!");
             return;
         }
@@ -47,22 +42,19 @@ public class Laboratorio {
 
     }
 
-    public void listarColaboradores(){
+    public void listarColaboradores() {
         System.out.println();
         System.out.println("-----------------------------------------");
         System.out.println("        Colaboradores cadastrados        ");
         System.out.println("-----------------------------------------");
 
-        if(Laboratorio.getListaColaboradores().isEmpty()){
+        if (Laboratorio.getListaColaboradores().isEmpty()) {
             System.out.println("Não há nenhum colaborador cadastrado.");
-        }
-        else {
-            for (Colaborador c : Laboratorio.getListaColaboradores()){
-                System.out.printf("\nNome: %s\nE-mail: %s\nCategoria: %s%n", 
-                                c.getNome(),
-                                c.getEmail(),
-                                c.getCategoria());
-                
+        } else {
+            for (Colaborador c : Laboratorio.getListaColaboradores()) {
+                System.out.printf("\nNome: %s\nE-mail: %s\nCategoria: %s%n", c.getNome(), c.getEmail(),
+                        c.getCategoria());
+
             }
         }
 
@@ -77,33 +69,24 @@ public class Laboratorio {
 
         for (Colaborador colaboradorBuscado : Laboratorio.getListaColaboradores()) {
 
-            if(colaboradorBuscado.getNome().contains(nome)) {
+            if (colaboradorBuscado.getNome().contains(nome)) {
 
-                System.out.printf("\nNome: %s\nE-mail: %s\nCategoria: %s%n", 
-                                colaboradorBuscado.getNome(),
-                                colaboradorBuscado.getEmail(),
-                                colaboradorBuscado.getCategoria());
-                
+                System.out.printf("\nNome: %s\nE-mail: %s\nCategoria: %s%n", colaboradorBuscado.getNome(),
+                        colaboradorBuscado.getEmail(), colaboradorBuscado.getCategoria());
+
             }
         }
 
         return null;
     }
 
+    public void adicionarProjeto() {
 
-    public void adicionarProjeto(){
-
-        try{
+        try {
             System.out.println("\nDigite os dados do projeto:\n");
 
             System.out.print("Título: ");
             String titulo = sc.nextLine();
-
-            System.out.print("Data de início no formato dd/mm/aaaa: ");
-            Date dataInicio = sdf.parse(sc.next());
-
-            System.out.print("Data de término no formato dd/mm/aaaa: ");
-            Date dataTermino = sdf.parse(sc.next());
 
             System.out.print("Objetivo: ");
             String objetivo = sc.nextLine();
@@ -117,12 +100,17 @@ public class Laboratorio {
             System.out.print("Valor do financiamento: ");
             double valorDoFinanciamento = sc.nextDouble();
 
-            Projeto novoProjeto = new Projeto(titulo, dataInicio, dataTermino, objetivo, descricao, agenciaFinanciadora, valorDoFinanciamento);
+            System.out.print("Data de início no formato dd/mm/aaaa: ");
+            Date dataInicio = sdf.parse(sc.next());
 
-            while(novoProjeto.getStatus() == -1){
-                System.out.println("\nAgora que você preencheu todos os dados, mude o status do seu projeto para finalizar a criação\n");
-                novoProjeto.alterarStatus();
-            }
+            System.out.print("Data de término no formato dd/mm/aaaa: ");
+            Date dataTermino = sdf.parse(sc.next());
+
+
+            Projeto novoProjeto = new ProjetoBuilder().titulo(titulo)
+                    .objetivo(objetivo).descricao(descricao).agenciaFinanciadora(agenciaFinanciadora)
+                    .valorDoFinanciamento(valorDoFinanciamento).dataInicio(dataInicio).dataTermino(dataTermino).build();
+            
 
             Laboratorio.getListaProjetos().add(novoProjeto);
         }
@@ -156,13 +144,7 @@ public class Laboratorio {
         else {
             for (Projeto proj : Laboratorio.getListaProjetos()) {
 
-                System.out.println("\nTítulo: " + proj.getTitulo() +
-                                "\nData de início: " + proj.getDataInicio().toString() +
-                                "\nData de término: " + proj.getDataTermino().toString() +
-                                "\nObjetivo: " + proj.getObjetivo() +
-                                "\nDescrição: " + proj.getDescricao() +
-                                "\nAgência financiadora: " + proj.getAgenciaFinanciadora() +
-                                "\nValor do financiamento: R$" + proj.getValorDoFinanciamento());
+                System.out.println(proj);
                 System.out.println();
     
             }
