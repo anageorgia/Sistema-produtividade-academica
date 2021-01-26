@@ -2,11 +2,13 @@ package entities;
 
 import java.util.Scanner;
 
+import java.util.Date;
+
 public class Projeto {
     
     String titulo;
-    String dataInicio;
-    String dataTermino;
+    Date dataInicio;
+    Date dataTermino;
     String objetivo;
     String descricao;
     String agenciaFinanciadora;
@@ -14,7 +16,7 @@ public class Projeto {
     int status;
 
 
-    public Projeto(String titulo, String dataInicio, String dataTermino, 
+    public Projeto(String titulo, Date dataInicio, Date dataTermino, 
                 String objetivo, String descricao, String agenciaFinanciadora,
                 double valorDoFinanciamento){
         
@@ -55,6 +57,8 @@ public class Projeto {
         else if (this.getStatus() == 0) {
             System.out.println("Projeto concluído, não dá mais para modificar!");
         }
+
+        sc.close();
     }
 
 
@@ -62,11 +66,11 @@ public class Projeto {
         return titulo;
     }
 
-    public String getDataInicio() {
+    public Date getDataInicio() {
         return dataInicio;
     }
 
-    public String getDataTermino() {
+    public Date getDataTermino() {
         return dataTermino;
     }
 

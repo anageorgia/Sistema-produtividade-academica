@@ -1,10 +1,18 @@
 package entities;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import java.util.Date;
+
+import exceptions.DomainException;
+
+
 public class Laboratorio {
     Scanner sc = new Scanner(System.in);
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private static ArrayList<Colaborador> listaColaboradores = new ArrayList<Colaborador>();
     private static ArrayList<Projeto> listaProjetos = new ArrayList<Projeto>();
@@ -85,38 +93,56 @@ public class Laboratorio {
 
     public void adicionarProjeto(){
 
-        System.out.println("\nDigite os dados do projeto:\n");
+        try{
+            System.out.println("\nDigite os dados do projeto:\n");
 
-        System.out.print("Título: ");
-        String titulo = sc.nextLine();
+            System.out.print("Título: ");
+            String titulo = sc.nextLine();
 
-        System.out.print("Data de início no formato dd/mm/aaaa: ");
-        String dataInicio = sc.nextLine();
+            System.out.print("Data de início no formato dd/mm/aaaa: ");
+            Date dataInicio = sdf.parse(sc.next());
 
-        System.out.print("Data de término no formato dd/mm/aaaa: ");
-        String dataTermino = sc.nextLine();
+            System.out.print("Data de término no formato dd/mm/aaaa: ");
+            Date dataTermino = sdf.parse(sc.next());
 
-        System.out.print("Objetivo: ");
-        String objetivo = sc.nextLine();
+            System.out.print("Objetivo: ");
+            String objetivo = sc.nextLine();
 
-        System.out.print("Descrição: ");
-        String descricao = sc.nextLine();
+            System.out.print("Descrição: ");
+            String descricao = sc.nextLine();
 
-        System.out.print("Agência financiadora: ");
-        String agenciaFinanciadora = sc.nextLine();
+            System.out.print("Agência financiadora: ");
+            String agenciaFinanciadora = sc.nextLine();
 
-        System.out.print("Valor do financiamento: ");
-        double valorDoFinanciamento = sc.nextDouble();
+            System.out.print("Valor do financiamento: ");
+            double valorDoFinanciamento = sc.nextDouble();
 
-        Projeto novoProjeto = new Projeto(titulo, dataInicio, dataTermino, objetivo, descricao, agenciaFinanciadora, valorDoFinanciamento);
+            Projeto novoProjeto = new Projeto(titulo, dataInicio, dataTermino, objetivo, descricao, agenciaFinanciadora, valorDoFinanciamento);
 
-        while(novoProjeto.getStatus() == -1){
-            System.out.println("\nAgora que você preencheu todos os dados, mude o status do seu projeto para finalizar a criação\n");
-            novoProjeto.alterarStatus();
+            while(novoProjeto.getStatus() == -1){
+                System.out.println("\nAgora que você preencheu todos os dados, mude o status do seu projeto para finalizar a criação\n");
+                novoProjeto.alterarStatus();
+            }
+
+            Laboratorio.getListaProjetos().add(novoProjeto);
         }
+        catch (ParseException e) {
+			System.out.println();
+            System.out.println("-----------------------------------------");
+            System.out.println("         Formato de data inválido        ");
+            System.out.println("-----------------------------------------");
+            System.out.println();
+		}
 
-        Laboratorio.getListaProjetos().add(novoProjeto);
+		catch (RuntimeException e) {
+            System.out.println();
+            System.out.println("-----------------------------------------");
+            System.out.println("               Erro inesperado           ");
+            System.out.println("-----------------------------------------");
+            System.out.println();
+		}
     }
+
 
     public void listarProjetos(){
         System.out.println();
