@@ -1,4 +1,3 @@
-# Sistema-produtividade-academica
 <h1 align="center">Sistema de Produtividade Acadêmica</h1>
 
 O que é possível fazer neste programa?
