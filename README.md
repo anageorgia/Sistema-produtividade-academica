@@ -10,11 +10,12 @@ O que é possível fazer neste programa?
 - [x] Buscar (pelo nome) colaborador cadastrados
 - [x] Encerrar programa
 
-## Reavaliação
+## Refatoração
 <p> Aqui estão listadas as últimas features para o processo de reavaliação na disciplina de Projeto de Software</p>
 
 - [x] Adicionado tratamento de exceção para validação de data
 - [x] Aplicação dos padrões de projeto:
    - Padrão Builder na classe Projeto;
+   - Padrão Factory Method para Colaboradores.
 
 
